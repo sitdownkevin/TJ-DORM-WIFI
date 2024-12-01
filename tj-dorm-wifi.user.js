@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TJ-DORM-WIFI 辅助
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  同济大学宿舍网络登录助手
 // @author       kexu
 // @match        http://172.21.0.54/*
