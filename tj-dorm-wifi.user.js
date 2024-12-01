@@ -25,21 +25,25 @@
             position: fixed !important;
             top: 20px !important;
             right: 20px !important;
+            bottom: 20px !important; /* 添加底部边距 */
             z-index: 999999999 !important;
             background: white !important;
             padding: 24px !important;
             border-radius: 20px !important;
             box-shadow: 0 8px 30px rgba(0,0,0,0.1) !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-            min-width: 320px !important;
-            max-width: 380px !important;
+            width: 380px !important; /* 固定宽度 */
+            height: auto !important;
+            max-height: calc(100vh - 40px) !important; /* 视窗高度减去上下边距 */
             visibility: visible !important;
             opacity: 1 !important;
-            display: block !important;
+            display: flex !important;
+            flex-direction: column !important;
             pointer-events: auto !important;
             transform: none !important;
             backdrop-filter: blur(10px) !important;
             -webkit-backdrop-filter: blur(10px) !important;
+            overflow: hidden !important;
         }
 
         .tj-wifi-container h2 {
@@ -186,7 +190,29 @@
         }
 
         .device-list {
+            flex: 1 1 auto !important;
+            overflow-y: auto !important;
             margin-top: 16px !important;
+            padding-right: 8px !important;
+            width: 100% !important; /* 确保列表占满容器宽度 */
+        }
+
+        .device-list::-webkit-scrollbar {
+            width: 6px !important;
+        }
+
+        .device-list::-webkit-scrollbar-track {
+            background: #f1f1f1 !important;
+            border-radius: 3px !important;
+        }
+
+        .device-list::-webkit-scrollbar-thumb {
+            background: #888 !important;
+            border-radius: 3px !important;
+        }
+
+        .device-list::-webkit-scrollbar-thumb:hover {
+            background: #555 !important;
         }
 
         .device-list-header {
@@ -246,6 +272,14 @@
         .device-info-value {
             color: #1e293b !important;
             font-weight: 500 !important;
+        }
+
+        .device-list-card {
+            width: 100% !important;
+            background: white !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            border: 1px solid #17a2b820 !important;
         }
     `);
 
@@ -324,7 +358,7 @@
             const buttonContainer = document.createElement('div');
             buttonContainer.style.cssText = `
                 display: grid;
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
                 gap: 10px;
                 margin-top: 10px;
             `;
@@ -727,10 +761,13 @@
         const deviceListDiv = document.getElementById('device-list');
         if (!deviceListDiv) return;
 
+        // 确保容器可以滚动
         deviceListDiv.style.display = 'block';
-        deviceListDiv.style.maxHeight = '400px'; // 设置最大高度
-        deviceListDiv.style.overflowY = 'auto';  // 允许垂直滚动
-        deviceListDiv.style.marginBottom = '20px'; // 底部留空间
+        deviceListDiv.style.maxHeight = '400px';
+        deviceListDiv.style.overflowY = 'auto';
+        deviceListDiv.style.overflowX = 'hidden';
+        deviceListDiv.style.paddingRight = '10px';
+        deviceListDiv.style.position = 'relative';
 
         // 生成设备列表HTML
         let content = `
@@ -849,25 +886,14 @@
         });
 
         content += `
-                    </div>
-                </div>
-                <div style="
-                    padding: 8px 12px;
-                    background: #17a2b805;
-                    border-top: 1px solid #17a2b820;
-                    font-size: 12px;
-                    color: #718096;
-                    text-align: right;
-                    position: sticky;
-                    bottom: 0;
-                    background: white;
-                ">
-                    更新时间: ${new Date().toLocaleTimeString()}
                 </div>
             </div>
-        `;
+        </div>
+    `;
 
-        deviceListDiv.innerHTML = content;
+    // 设置内容并确保可滚动
+    deviceListDiv.innerHTML = content;
+    deviceListDiv.style.webkitOverflowScrolling = 'touch'; // 移动端平滑滚动
     }
 
     // 更新设备列表状态
