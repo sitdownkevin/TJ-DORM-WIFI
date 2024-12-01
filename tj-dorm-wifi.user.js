@@ -1,35 +1,53 @@
 // ==UserScript==
 // @name         TJ-DORM-WIFI 辅助
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  同济大学校园网登录和设备管理工具
 // @author       sitdownkevin
 // @match        http://172.21.0.54/*
 // @match        http://172.21.0.54:801/*
+// @match        http://172.21.0.54/index.html*
+// @match        http://172.21.0.54/drcom/*
+// @match        http://172.21.0.54:801/eportal/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_addStyle
 // @connect      172.21.0.54
 // @license      MIT
-// @run-at       document-idle
+// @run-at       document-start
+// @noframes
 // ==/UserScript==
 
 (function() {
     'use strict';
 
+    // 添加全局样式
+    GM_addStyle(`
+        .tj-wifi-container {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            z-index: 999999 !important;
+        }
+    `);
+
+    // 检查UI是否已存在
+    function isUIExists() {
+        return document.querySelector('.tj-wifi-container') !== null;
+    }
+
     // 创建UI界面
     function createUI() {
+        if (isUIExists()) return; // 防止重复创建
+
         const container = document.createElement('div');
+        container.className = 'tj-wifi-container';
         container.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
             background: white;
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 9999;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             min-width: 300px;
         `;
@@ -451,14 +469,40 @@
 
     // 启动脚本
     function initScript() {
-        // 确保DOM已完全加载
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            setTimeout(createUI, 500); // 添加小延迟确保DOM完全准备好
-        } else {
-            document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(createUI, 500);
-            });
+        // 清除可能的缓存
+        if (window.localStorage) {
+            try {
+                window.localStorage.removeItem('tj-wifi-ui-state');
+            } catch (e) {
+                console.error('清除缓存失败:', e);
+            }
         }
+
+        // 确保脚本只初始化一次
+        if (window.tjWifiInitialized) return;
+        window.tjWifiInitialized = true;
+
+        // 主初始化逻辑
+        function init() {
+            if (document.body) {
+                setTimeout(createUI, 500);
+            } else {
+                setTimeout(init, 100);
+            }
+        }
+
+        // 多重事件监听，确保在各种情况下都能正确初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+            window.addEventListener('load', init);
+        } else {
+            init();
+        }
+
+        // 添加错误处理
+        window.addEventListener('error', function(e) {
+            console.error('TJ-WIFI脚本错误:', e);
+        });
     }
 
     // 启动初始化
