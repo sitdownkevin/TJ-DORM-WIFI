@@ -13,6 +13,7 @@
 // @grant        GM_getValue
 // @grant        GM_addStyle
 // @connect      172.21.0.54
+// @run-at       document-start
 // ==/UserScript==
 
 (function() {
@@ -24,17 +25,227 @@
             position: fixed !important;
             top: 20px !important;
             right: 20px !important;
-            z-index: 999999 !important;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            min-width: 300px;
+            z-index: 999999999 !important;
+            background: white !important;
+            padding: 24px !important;
+            border-radius: 20px !important;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1) !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            min-width: 320px !important;
+            max-width: 380px !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            display: block !important;
+            pointer-events: auto !important;
+            transform: none !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
         }
-        
+
+        .tj-wifi-container h2 {
+            margin: 0 0 24px 0 !important;
+            text-align: center !important;
+            color: #1a202c !important;
+            font-size: 22px !important;
+            font-weight: 600 !important;
+        }
+
+        .tj-wifi-container input,
+        .tj-wifi-container select {
+            width: 100% !important;
+            padding: 14px !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 16px !important;
+            font-size: 15px !important;
+            transition: all 0.3s ease !important;
+            box-sizing: border-box !important;
+            background: #f8fafc !important;
+            margin-bottom: 12px !important;
+            color: #1a202c !important;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+        }
+
+        .tj-wifi-container select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 12px center !important;
+            background-size: 16px !important;
+            padding-right: 40px !important;
+        }
+
+        .tj-wifi-container input:focus,
+        .tj-wifi-container select:focus {
+            border-color: #3b82f6 !important;
+            outline: none !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+            background: white !important;
+        }
+
+        .tj-wifi-container button {
+            width: 100% !important;
+            padding: 14px !important;
+            border: none !important;
+            border-radius: 16px !important;
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            margin-bottom: 12px !important;
+            color: white !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .tj-wifi-container button:hover {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+        }
+
+        .tj-wifi-container button:active {
+            transform: translateY(0) !important;
+        }
+
+        .tj-wifi-container button.login-btn {
+            background: linear-gradient(135deg, #3b82f6, #10b981) !important;
+        }
+
+        .tj-wifi-container button.logout-btn {
+            background: linear-gradient(135deg, #ef4444, #f59e0b) !important;
+        }
+
+        .tj-wifi-container button.device-btn {
+            background: linear-gradient(135deg, #06b6d4, #0ea5e9) !important;
+        }
+
         .status-card {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff !important;
+            border-radius: 12px !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+            overflow: hidden !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        .status-header {
+            padding: 12px 16px !important;
+            background: #f8fafc !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+
+        .status-content {
+            padding: 20px !important;
+        }
+
+        .status-row {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            margin-bottom: 16px !important;
+            font-size: 14px !important;
+            padding: 4px 8px !important;
+            background: #f8fafc !important;
+            border-radius: 6px !important;
+        }
+
+        .status-row:last-child {
+            margin-bottom: 0 !important;
+        }
+
+        .status-label {
+            color: #64748b !important;
+            font-weight: 500 !important;
+        }
+
+        .status-value {
+            color: #1e293b !important;
+            font-weight: 600 !important;
+        }
+
+        .status-icon {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 20px !important;
+            height: 20px !important;
+            background: #dcfce7 !important;
+            color: #16a34a !important;
+            border-radius: 50% !important;
+            font-size: 12px !important;
+        }
+
+        .status-footer {
+            padding: 12px 16px !important;
+            background: #f8fafc !important;
+            border-top: 1px solid #e2e8f0 !important;
+            font-size: 13px !important;
+            color: #64748b !important;
+            text-align: right !important;
+        }
+
+        .device-list {
+            margin-top: 16px !important;
+        }
+
+        .device-list-header {
+            color: #64748b !important;
+            font-size: 14px !important;
+            margin-bottom: 12px !important;
+            padding: 0 4px !important;
+        }
+
+        .device-card {
+            background: #f8fafc !important;
+            border-radius: 16px !important;
+            padding: 16px !important;
+            margin-bottom: 12px !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        .device-card .device-header {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            margin-bottom: 12px !important;
+            padding-bottom: 8px !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+
+        .device-card .device-title {
+            color: #1e293b !important;
+            font-weight: 600 !important;
+            font-size: 15px !important;
+        }
+
+        .device-card .device-status {
+            padding: 4px 12px !important;
+            border-radius: 20px !important;
+            font-size: 13px !important;
+            background: #dcfce7 !important;
+            color: #10b981 !important;
+            font-weight: 500 !important;
+        }
+
+        .device-info-row {
+            display: flex !important;
+            justify-content: space-between !important;
+            margin-bottom: 8px !important;
+            font-size: 14px !important;
+        }
+
+        .device-info-row:last-child {
+            margin-bottom: 0 !important;
+        }
+
+        .device-info-label {
+            color: #64748b !important;
+        }
+
+        .device-info-value {
+            color: #1e293b !important;
+            font-weight: 500 !important;
         }
     `);
 
@@ -45,214 +256,137 @@
 
     // 创建UI
     function createUI() {
-        if (isUIExists()) return;
-
-        const container = document.createElement('div');
-        container.id = 'login-container';
-        container.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 300px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            z-index: 10000;
-        `;
-
-        // 添加标题
-        const title = document.createElement('h2');
-        title.textContent = 'TJ-DORM-WIFI 辅助';
-        title.style.cssText = `
-            margin: 0 0 20px 0;
-            text-align: center;
-            color: #2c3e50;
-            font-size: 20px;
-            font-weight: 600;
-        `;
-        container.appendChild(title);
-
-        // 添加登录部分
-        const loginSection = document.createElement('div');
-        loginSection.style.cssText = `
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
-        `;
-
-        // 添加用户名输入框
-        const username = document.createElement('input');
-        username.id = 'username';
-        username.type = 'text';
-        username.placeholder = '学号';
-        username.value = GM_getValue('username', '');
-        username.style.cssText = `
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
-            &:focus {
-                border-color: #4285f4;
-                outline: none;
+        try {
+            console.log('[TJ-WIFI] 开始创建UI...');
+            if (isUIExists()) {
+                console.log('[TJ-WIFI] UI已存在，跳过创建');
+                return;
             }
-        `;
 
-        // 添加密码输入框
-        const password = document.createElement('input');
-        password.id = 'password';
-        password.type = 'password';
-        password.placeholder = '密码';
-        password.value = GM_getValue('password', '');
-        password.style.cssText = username.style.cssText;
+            const container = document.createElement('div');
+            container.id = 'login-container';
+            container.className = 'tj-wifi-container';
+            console.log('[TJ-WIFI] 创建container元素');
 
-        // 添加网络选择下拉框
-        const networkSelector = document.createElement('select');
-        networkSelector.id = 'network-type';
-        networkSelector.style.cssText = `
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            background-color: white;
-            cursor: pointer;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
-            &:focus {
-                border-color: #4285f4;
-                outline: none;
-            }
-        `;
-        networkSelector.innerHTML = `
-            <option value="0">校园网</option>
-            <option value="2">中国移动</option>
-            <option value="3">中国联通</option>
-            <option value="4">中国电信</option>
-        `;
+            // 添加标题
+            const title = document.createElement('h2');
+            title.textContent = 'TJ-DORM-WIFI 辅助';
+            title.style.cssText = `
+                margin: 0 0 20px 0;
+                text-align: center;
+                color: #2c3e50;
+                font-size: 20px;
+                font-weight: 600;
+            `;
+            container.appendChild(title);
 
-        const savedNetworkType = GM_getValue('networkType', '0');
-        networkSelector.value = savedNetworkType;
+            // 添加登录部分
+            const loginSection = document.createElement('div');
+            loginSection.style.cssText = `
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin-bottom: 20px;
+            `;
 
-        networkSelector.addEventListener('change', function() {
-            GM_setValue('networkType', this.value);
-        });
+            // 添加用户名输入框
+            const username = document.createElement('input');
+            username.id = 'username';
+            username.type = 'text';
+            username.placeholder = '学号';
+            username.value = GM_getValue('username', '');
 
-        // 添加按钮容器
-        const buttonContainer = document.createElement('div');
-        buttonContainer.style.cssText = `
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            margin-top: 10px;
-        `;
+            // 添加密码输入框
+            const password = document.createElement('input');
+            password.id = 'password';
+            password.type = 'password';
+            password.placeholder = '密码';
+            password.value = GM_getValue('password', '');
 
-        // 添加登录按钮
-        const loginButton = document.createElement('button');
-        loginButton.textContent = '登录';
-        loginButton.style.cssText = `
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background-color: #4285f4;
-            color: white;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            &:hover {
-                background-color: #3367d6;
-            }
-        `;
-        loginButton.addEventListener('click', autoLogin);
+            // 添加网络选择下拉框
+            const networkSelector = document.createElement('select');
+            networkSelector.id = 'network-type';
+            networkSelector.innerHTML = `
+                <option value="0">校园网</option>
+                <option value="2">中国移动</option>
+                <option value="3">中国联通</option>
+                <option value="4">中国电信</option>
+            `;
 
-        // 添加登出按钮
-        const logoutButton = document.createElement('button');
-        logoutButton.textContent = '登出';
-        logoutButton.style.cssText = `
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background-color: #dc3545;
-            color: white;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            &:hover {
-                background-color: #c82333;
-            }
-        `;
-        logoutButton.addEventListener('click', autoLogout);
+            const savedNetworkType = GM_getValue('networkType', '0');
+            networkSelector.value = savedNetworkType;
 
-        // 添加设备列表按钮
-        const deviceButton = document.createElement('button');
-        deviceButton.textContent = '查看设备列表';
-        deviceButton.style.cssText = `
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background-color: #17a2b8;
-            color: white;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            &:hover {
-                background-color: #138496;
-            }
-        `;
-        deviceButton.addEventListener('click', getDeviceList);
+            networkSelector.addEventListener('change', function() {
+                GM_setValue('networkType', this.value);
+            });
 
-        // 添加状态显示区域
-        const statusDiv = document.createElement('div');
-        statusDiv.id = 'login-status';
-        statusDiv.style.cssText = `
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-            font-size: 14px;
-        `;
+            // 添加按钮容器
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.cssText = `
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-top: 10px;
+            `;
 
-        // 添加设备列表显示区域
-        const deviceListDiv = document.createElement('div');
-        deviceListDiv.id = 'device-list';
-        deviceListDiv.style.cssText = `
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-            font-size: 14px;
-            display: none;
-        `;
+            // 添加登录按钮
+            const loginButton = document.createElement('button');
+            loginButton.textContent = '登录';
+            loginButton.className = 'login-btn';
+            loginButton.addEventListener('click', autoLogin);
 
-        // 组装UI
-        loginSection.appendChild(username);
-        loginSection.appendChild(password);
-        loginSection.appendChild(networkSelector);
-        buttonContainer.appendChild(loginButton);
-        buttonContainer.appendChild(logoutButton);
-        buttonContainer.appendChild(deviceButton);
-        loginSection.appendChild(buttonContainer);
-        container.appendChild(loginSection);
-        container.appendChild(statusDiv);
-        container.appendChild(deviceListDiv);
+            // 添加登出按钮
+            const logoutButton = document.createElement('button');
+            logoutButton.textContent = '登出';
+            logoutButton.className = 'logout-btn';
+            logoutButton.addEventListener('click', autoLogout);
 
-        document.body.appendChild(container);
+            // 添加设备列表按钮
+            const deviceButton = document.createElement('button');
+            deviceButton.textContent = '查看设备列表';
+            deviceButton.className = 'device-btn';
+            deviceButton.addEventListener('click', getDeviceList);
 
-        // 保存用户名和密码
-        username.addEventListener('change', () => GM_setValue('username', username.value));
-        password.addEventListener('change', () => GM_setValue('password', password.value));
+            // 添加状态显示区域
+            const statusDiv = document.createElement('div');
+            statusDiv.id = 'login-status';
+            statusDiv.className = 'status-card';
 
-        // 启动定时检查
-        checkLoginStatus();
-        setInterval(checkLoginStatus, 30000);
+            // 添加设备列表显示区域
+            const deviceListDiv = document.createElement('div');
+            deviceListDiv.id = 'device-list';
+            deviceListDiv.style.cssText = `
+                margin-top: 15px;
+                display: none;
+            `;
+
+            // 组装UI
+            loginSection.appendChild(username);
+            loginSection.appendChild(password);
+            loginSection.appendChild(networkSelector);
+            buttonContainer.appendChild(loginButton);
+            buttonContainer.appendChild(logoutButton);
+            buttonContainer.appendChild(deviceButton);
+            loginSection.appendChild(buttonContainer);
+            container.appendChild(loginSection);
+            container.appendChild(statusDiv);
+            container.appendChild(deviceListDiv);
+
+            document.body.appendChild(container);
+            console.log('[TJ-WIFI] UI创建成功');
+
+            // 保存用户名和密码
+            username.addEventListener('change', () => {
+                console.log('[TJ-WIFI] 保存用户名');
+                GM_setValue('username', username.value);
+            });
+            password.addEventListener('change', () => {
+                console.log('[TJ-WIFI] 保存密码');
+                GM_setValue('password', password.value);
+            });
+        } catch (error) {
+            console.error('[TJ-WIFI] 创建UI时发生错误:', error);
+        }
     }
 
     // 自动登录功能
@@ -350,21 +484,23 @@
 
     // 检查登录状态
     function checkLoginStatus(callback) {
+        console.log('[TJ-WIFI] 开始检查登录状态');
         GM_xmlhttpRequest({
             method: 'GET',
             url: 'http://172.21.0.54/',
             timeout: 5000,
             onload: function(response) {
                 try {
-                    const isLoggedIn = response.responseText.includes('注销页') && 
+                    const isLoggedIn = response.responseText.includes('注销页') &&
                                      !response.responseText.includes('上网登录页');
-                    
+
                     if (isLoggedIn) {
+                        console.log('[TJ-WIFI] 检测到已登录状态');
                         const uidMatch = response.responseText.match(/uid\s*=\s*["']([^"']+)["']/);
                         const nameMatch = response.responseText.match(/NID\s*=\s*["']([^"']+)["']/);
                         const ipMatch = response.responseText.match(/v4ip\s*=\s*["']([^"']+)["']/);
                         const loginTimeMatch = response.responseText.match(/stime\s*=\s*["']([^"']+)["']/);
-                        
+
                         const uid = uidMatch ? uidMatch[1].trim() : '未知';
                         const name = nameMatch ? nameMatch[1].trim() : '未知';
                         const ip = ipMatch ? ipMatch[1].trim() : '未知';
@@ -382,16 +518,17 @@
                         };
                         updateStatusWithFormat(statusInfo);
                     } else {
+                        console.log('[TJ-WIFI] 检测到未登录状态');
                         updateStatusWithFormat({
                             type: 'error',
                             status: '离线',
                             message: '未登录'
                         });
                     }
-                    
+
                     if (callback) callback();
                 } catch (error) {
-                    console.error('解析登录状态失败:', error);
+                    console.error('[TJ-WIFI] 解析登录状态失败:', error);
                     updateStatusWithFormat({
                         type: 'warning',
                         status: '错误',
@@ -401,6 +538,7 @@
                 }
             },
             onerror: function() {
+                console.error('[TJ-WIFI] 网络请求失败');
                 updateStatusWithFormat({
                     type: 'error',
                     status: '错误',
@@ -416,102 +554,88 @@
         const statusDiv = document.getElementById('login-status');
         if (!statusDiv) return;
 
-        const colors = {
-            success: '#28a745',
-            error: '#dc3545',
-            info: '#17a2b8',
-            warning: '#ffc107'
-        };
-
-        const icons = {
-            success: '✓',
-            error: '✗',
-            info: 'ℹ',
-            warning: '⚠️'
-        };
-
-        let content = `
-            <div class="status-card" style="
-                background: white;
-                border-radius: 8px;
-                overflow: hidden;
-                border: 1px solid ${colors[statusInfo.type]}20;
-            ">
-                <div style="
-                    display: flex;
-                    align-items: center;
-                    padding: 12px;
-                    background: ${colors[statusInfo.type]}10;
-                    border-bottom: 1px solid ${colors[statusInfo.type]}20;
-                ">
-                    <span style="
-                        color: ${colors[statusInfo.type]};
-                        font-weight: 500;
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                    ">
-                        ${icons[statusInfo.type]}
-                        ${statusInfo.status}
-                    </span>
-                </div>
-        `;
-
-        if (statusInfo.details) {
-            content += `
-                <div style="padding: 12px;">
-                    <div style="
-                        display: grid;
-                        gap: 8px;
-                        color: #4a5568;
-                    ">
-            `;
-            
-            for (const [key, value] of Object.entries(statusInfo.details)) {
-                content += `
-                    <div style="
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 4px 0;
-                    ">
-                        <span style="color: #718096; font-size: 13px;">${key}</span>
-                        <span style="font-weight: 500;">${value}</span>
+        // 立即显示一个加载状态
+        if (!statusDiv.innerHTML) {
+            statusDiv.innerHTML = `
+                <div class="status-card">
+                    <div class="status-header">
+                        <span style="color: #17a2b8;">⟳</span>
+                        <span style="color: #17a2b8; font-weight: 500;">正在检查状态...</span>
                     </div>
-                `;
-            }
-            
-            content += `
+                    <div class="status-content">
+                        <div style="text-align: center; color: #4a5568;">
+                            正在获取网络状态信息
+                        </div>
                     </div>
                 </div>
             `;
-        } else if (statusInfo.message) {
-            content += `
-                <div style="
-                    padding: 12px;
-                    color: #4a5568;
-                    text-align: center;
-                ">
-                    ${statusInfo.message}
+            statusDiv.style.display = 'block';
+        }
+
+        let content = '';
+
+        if (statusInfo.type === 'success' && statusInfo.details) {
+            content = `
+                <div class="status-card">
+                    <div class="status-header">
+                        <span class="status-icon">✓</span>
+                        <span style="color: #28a745; font-weight: 500;">在线</span>
+                    </div>
+                    <div class="status-content">
+                        <div class="status-row">
+                            <span class="status-label">学号</span>
+                            <span class="status-value">${statusInfo.details.学号}</span>
+                        </div>
+                        <div class="status-row">
+                            <span class="status-label">姓名</span>
+                            <span class="status-value">${statusInfo.details.姓名}</span>
+                        </div>
+                        <div class="status-row">
+                            <span class="status-label">IP</span>
+                            <span class="status-value">${statusInfo.details.IP}</span>
+                        </div>
+                        <div class="status-row">
+                            <span class="status-label">登录时间</span>
+                            <span class="status-value">${statusInfo.details.登录时间}</span>
+                        </div>
+                    </div>
+                    <div class="status-footer">
+                        更新时间: ${new Date().toLocaleTimeString()}
+                    </div>
+                </div>
+            `;
+        } else {
+            const colors = {
+                error: '#dc3545',
+                info: '#17a2b8',
+                warning: '#ffc107'
+            };
+
+            content = `
+                <div class="status-card">
+                    <div class="status-header">
+                        <span style="color: ${colors[statusInfo.type]};">${
+                            statusInfo.type === 'error' ? '✗' :
+                            statusInfo.type === 'warning' ? '⚠️' : 'ℹ'
+                        }</span>
+                        <span style="color: ${colors[statusInfo.type]}; font-weight: 500;">
+                            ${statusInfo.status}
+                        </span>
+                    </div>
+                    <div class="status-content">
+                        <div style="text-align: center; color: #4a5568;">
+                            ${statusInfo.message}
+                        </div>
+                    </div>
+                    <div class="status-footer">
+                        更新时间: ${new Date().toLocaleTimeString()}
+                    </div>
                 </div>
             `;
         }
 
-        content += `
-                <div style="
-                    padding: 8px 12px;
-                    background: ${colors[statusInfo.type]}05;
-                    border-top: 1px solid ${colors[statusInfo.type]}20;
-                    font-size: 12px;
-                    color: #718096;
-                    text-align: right;
-                ">
-                    更新时间: ${new Date().toLocaleTimeString()}
-                </div>
-            </div>
-        `;
-
         statusDiv.innerHTML = content;
+        statusDiv.style.display = 'block';
     }
 
     // 更新状态显示（兼容旧的调用方式）
@@ -540,7 +664,7 @@
     // 获取设备列表
     function getDeviceList() {
         const username = document.getElementById('username')?.value;
-        
+
         if (!username) {
             updateStatus('请先输入学号', 'error');
             return;
@@ -564,7 +688,7 @@
                 try {
                     // 解析返回的数据
                     let jsonStr = response.responseText;
-                    
+
                     // 调试输出
                     console.log('Raw response:', jsonStr);
 
@@ -574,10 +698,10 @@
                         throw new Error('Invalid response format');
                     }
                     jsonStr = match[1];
-                    
+
                     // 调试输出
                     console.log('Extracted JSON:', jsonStr);
-                    
+
                     const data = JSON.parse(jsonStr);
                     console.log('Parsed data:', data);
 
@@ -782,19 +906,89 @@
 
     // 初始化脚本
     function initScript() {
-        if (window.top !== window.self) return;
-        if (window.tjWifiInitialized) return;
-        window.tjWifiInitialized = true;
+        console.log('[TJ-WIFI] 开始初始化脚本...');
+        console.log('[TJ-WIFI] 当前URL:', window.location.href);
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', createUI);
-            document.addEventListener('DOMContentLoaded', () => setTimeout(startLoginStatusCheck, 1000));
-        } else {
+        if (window.top !== window.self) {
+            console.log('[TJ-WIFI] 脚本在iframe中，停止初始化');
+            return;
+        }
+
+        if (window.tjWifiInitialized) {
+            console.log('[TJ-WIFI] 脚本已初始化，停止初始化');
+            return;
+        }
+
+        // 使用 MutationObserver 监听页面变化，防止页面被重定向或修改
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                // 检查是否有元素被移除
+                if (mutation.removedNodes.length > 0) {
+                    ensureUIExists();
+                }
+                // 检查是否有元素被添加
+                if (mutation.addedNodes.length > 0) {
+                    ensureUIExists();
+                }
+            });
+        });
+
+        // 监听整个文档的变化
+        observer.observe(document.documentElement, {
+            childList: true,
+            subtree: true
+        });
+
+        window.tjWifiInitialized = true;
+        console.log('[TJ-WIFI] 设置初始化标志');
+
+        // 确保UI始终存在
+        function ensureUIExists() {
+            if (!isUIExists()) {
+                console.log('[TJ-WIFI] UI不存在，重新创建');
+                createUI();
+                // 立即检查一次登录状态
+                checkLoginStatus();
+            }
+        }
+
+        try {
+            // 立即创建UI并检查状态
             createUI();
-            setTimeout(startLoginStatusCheck, 1000);
+            checkLoginStatus();
+
+            // 定期检查UI是否存在和登录状态
+            setInterval(() => {
+                ensureUIExists();
+                checkLoginStatus();
+            }, 30000);
+
+            // 添加页面卸载监听器
+            window.addEventListener('beforeunload', () => {
+                console.log('[TJ-WIFI] 页面即将卸载');
+            });
+
+            // 添加页面可见性变化监听器
+            document.addEventListener('visibilitychange', () => {
+                console.log('[TJ-WIFI] 页面可见性变化:', document.visibilityState);
+                if (document.visibilityState === 'visible') {
+                    ensureUIExists();
+                    checkLoginStatus();
+                }
+            });
+
+        } catch (error) {
+            console.error('[TJ-WIFI] 初始化脚本时发生错误:', error);
         }
     }
 
     // 启动脚本
-    initScript();
+    console.log('[TJ-WIFI] 脚本开始执行');
+
+    // 确保在页面加载的最早时机执行
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initScript);
+    } else {
+        initScript();
+    }
 })();
